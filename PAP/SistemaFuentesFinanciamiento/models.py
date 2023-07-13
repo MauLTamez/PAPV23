@@ -1,10 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_unixdatetimefield import UnixDateTimeField
 
 # Create your models here.
 
-class Fuentes(models.Model):
-    programa_ID = models.IntegerField(primary_key=True)
+class Fuente(models.Model):
+    programa_ID = models.AutoField(primary_key=True)
     nombre_Programa = models.CharField(max_length=1000)
     class Areas(models.TextChoices):
         CYT = "CYT", _("Ciencia y tecnología")
@@ -72,9 +73,9 @@ class Fuentes(models.Model):
         EC = "EC", _("Económico")
         EN = "EN", _("En especie")
         ND = "ND", _("No disponible")
-        OT = "OT", _("Otro")
+        OTR = "OTR", _("Otro")
     tipo_Apoyo = models.CharField(
-        max_length=2,
+        max_length=3,
         choices=Apoyos.choices
     )
     descripcion_Apoyo = models.CharField(max_length=1000)
@@ -92,13 +93,13 @@ class Fuentes(models.Model):
         SM = "SM", _("Semestral")
         AN = "AN", _("Anual")
         PU = "PU", _("Pago único")
-        OT = "OT", _("Otro")
+        OTR = "OTR", _("Otro")
     periodicidad = models.CharField(
-        max_length=2,
+        max_length=3,
         choices=Periodos.choices
     )
-    convocatoria_Inicio = models.DateField(null = True)
-    convocatoria_Cierre = models.DateField(null = True)
+    convocatoria_Inicio = UnixDateTimeField(null = True)
+    convocatoria_Cierre = UnixDateTimeField(null = True)
     activo = models.BooleanField(null = True)
     contacto = models.CharField(max_length=1000, default="Contacto",null = True)
     website = models.URLField(null = True)
